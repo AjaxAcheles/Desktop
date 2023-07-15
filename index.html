@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,28 +10,58 @@
 <body onload="startTime()">
     <div class="container">
         <div class="top">
-            <div id="date">Date</div>
-            <h1>Jonah's Personal Desktop</h1>
+            <div id="date"></div>
+            <h1>My Personal Desktop</h1>
             <div id="clock"></div>
         </div>
         <div class="main">
-           
+            <div class="widget">
+                <h3>Notepad</h3>
+                <div class="notepad">
+                    <textarea id="note-area" name="message" rows="20" cols="40" spellcheck="false" data-ms-editor="true"></textarea>
+                </div>
+                <button id="saveNoteBtn">Save</button>
+            </div>
+            <div class="widget">
+                <h3>Widget 02</h3>
+            </div>
+            <div class="widget">
+                <h3>Widget 03</h3>
+            </div>
         </div>
     </div>
-</body>
-
 <script>
-    today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = "0" + dd;
+    function loadNotes() {
+        var savedNotes = localStorage.getItem("notes");
+        if (savedNotes) {
+            $("#note-area").val(savedNotes);
+        } else {
+            $("#note-area").val("");
+        }
     }
-    if (mm < 10) {
-        mm = "0" + mm
-    }
-    $("#date").html(mm + "-" + dd + "-" + yyyy);
-</script>
-</html>
 
+    $(document).ready(function() {
+        loadNotes();
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; // As January is 0
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        $("#date").html(mm + '/' + dd + '/' + yyyy);
+
+        $("#saveNoteBtn").click(function() {
+            var currentNotes = $("#note-area").val();
+            localStorage.setItem("notes", currentNotes);
+        });
+    });
+</script>
+</body>
+</html>
